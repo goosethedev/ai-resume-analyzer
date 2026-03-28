@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadRouteImport } from './routes/upload'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResumeResumeIdRouteImport } from './routes/resume.$resumeId'
 
 const UploadRoute = UploadRouteImport.update({
   id: '/upload',
   path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,30 +37,34 @@ const ResumeResumeIdRoute = ResumeResumeIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/upload': typeof UploadRoute
   '/resume/$resumeId': typeof ResumeResumeIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/upload': typeof UploadRoute
   '/resume/$resumeId': typeof ResumeResumeIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/upload': typeof UploadRoute
   '/resume/$resumeId': typeof ResumeResumeIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/upload' | '/resume/$resumeId'
+  fullPaths: '/' | '/auth' | '/upload' | '/resume/$resumeId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/upload' | '/resume/$resumeId'
-  id: '__root__' | '/' | '/upload' | '/resume/$resumeId'
+  to: '/' | '/auth' | '/upload' | '/resume/$resumeId'
+  id: '__root__' | '/' | '/auth' | '/upload' | '/resume/$resumeId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   UploadRoute: typeof UploadRoute
   ResumeResumeIdRoute: typeof ResumeResumeIdRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/solid-router' {
       path: '/upload'
       fullPath: '/upload'
       preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,6 +104,7 @@ declare module '@tanstack/solid-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   UploadRoute: UploadRoute,
   ResumeResumeIdRoute: ResumeResumeIdRoute,
 }
