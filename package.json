@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heyputer/puter.js": "^2.2.10",
     "@tailwindcss/vite": "^4.2.0",
     "@tanstack/solid-router": "^1.162.4",
     "@tanstack/solid-router-devtools": "^1.162.4",
